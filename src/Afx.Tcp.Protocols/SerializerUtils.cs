@@ -21,6 +21,8 @@ namespace Afx.Tcp.Protocols
             return IsProtoBuf(typeof(T));
         }
 
+        private static List<Type> _types = new List<Type>();
+        private static object _lockObj = new object();
         /// <summary>
         /// IsProtoBuf
         /// </summary>
@@ -28,6 +30,8 @@ namespace Afx.Tcp.Protocols
         /// <returns></returns>
         public static bool IsProtoBuf(Type type)
         {
+            if (_types.Contains(type)) return true;
+
             if(type.IsArray)
             {
                 type = type.GetElementType();
@@ -38,7 +42,17 @@ namespace Afx.Tcp.Protocols
                 type = type.GetGenericArguments()[0];
             }
             var att = Attribute.GetCustomAttributes(type, typeof(ProtoContractAttribute), false);
-            return att != null && att.Length > 0;
+            if(att != null && att.Length > 0)
+            {
+                lock (_lockObj)
+                {
+                    if (!_types.Contains(type)) _types.Add(type);
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -85,8 +99,7 @@ namespace Afx.Tcp.Protocols
                         }
                         else
                         {
-                            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                            model = formatter.Deserialize(ms);
+                            throw new InvalidDataException("class not is ProtoContractAttribute!");
                         }
                     }
                 }
@@ -120,8 +133,7 @@ namespace Afx.Tcp.Protocols
                         }
                         else
                         {
-                            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                            formatter.Serialize(ms, model);
+                            throw new InvalidDataException("class not is ProtoContractAttribute!");
                         }
 
                         buffer = ms.ToArray();

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Afx.Tcp.Protocols</id>
-    <version>9.1.0</version>
+    <version>9.2.0</version>
     <authors>jerrylai</authors>
     <owners>jerrylai</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -12,21 +12,21 @@
     <tags>Socket TCP</tags>
     <dependencies>
       <group targetFramework=".NETFramework2.0">
-        <dependency id="Afx.Base" version="10.0.0" />
-        <dependency id="Afx.Sockets" version="9.0.0" />
-        <dependency id="protobuf-net" version="2.4.6" />
-      </group>
-      <group targetFramework=".NETFramework4.0">
-        <dependency id="Afx.Sockets" version="9.0.0" />
-        <dependency id="protobuf-net" version="2.4.6" />
+        <dependency id="Afx.Base" version="10.3.0" />
+        <dependency id="Afx.Sockets" version="9.2.0" />
+        <dependency id="protobuf-net" version="2.4.7" />
       </group>
       <group targetFramework=".NETStandard2.0">
-        <dependency id="Afx.Sockets" version="9.1.0" />
-        <dependency id="protobuf-net" version="3.0.73" />
+        <dependency id="Afx.Sockets" version="9.2.0" />
+        <dependency id="protobuf-net" version="3.1.17" />
       </group>
-	  <group targetFramework=".NETStandard2.1">
-        <dependency id="Afx.Sockets" version="9.1.0" />
-        <dependency id="protobuf-net" version="3.0.73" />
+      <group targetFramework=".NETStandard2.1">
+        <dependency id="Afx.Sockets" version="9.2.0" />
+        <dependency id="protobuf-net" version="3.1.17" />
+      </group>
+      <group targetFramework="net6.0">
+        <dependency id="Afx.Sockets" version="9.2.0" />
+        <dependency id="protobuf-net" version="3.1.17" />
       </group>
     </dependencies>
   </metadata>
