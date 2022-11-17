@@ -13,7 +13,7 @@ namespace Afx.Tcp.Protocols
     /// </summary>
     public class MsgClient : IMsgClient
     {
-        private TcpSocketAsync tcpClient = null;
+        private IntPackageAsyncTcpSocket tcpClient = null;
         /// <summary>
         /// 服务端host
         /// </summary>
@@ -85,7 +85,7 @@ namespace Afx.Tcp.Protocols
         /// </summary>
         public MsgClient()
         {
-            this.tcpClient = new TcpSocketAsync();
+            this.tcpClient = new IntPackageAsyncTcpSocket();
             this.tcpClient.AsyncConnectEvent += OnAsyncConnectEvent;
             this.tcpClient.ErrorEvent += OnErrorEvent;
             this.tcpClient.ReceiveEvent += ReceiveEvent;
@@ -108,7 +108,7 @@ namespace Afx.Tcp.Protocols
             }
         }
         
-        private void ReadingEvent(ITcpClientAsync client, int length)
+        private void ReadingEvent(IAsyncTcpSocket client, int length)
         {
             this.OnReadingCall(length);
         }
@@ -406,7 +406,7 @@ namespace Afx.Tcp.Protocols
             return result;
         }
 
-        private void OnAsyncConnectEvent(ITcpClientAsync client, bool isSuccess)
+        private void OnAsyncConnectEvent(IAsyncTcpSocket client, bool isSuccess)
         {
             if (isSuccess)
             {
@@ -432,13 +432,13 @@ namespace Afx.Tcp.Protocols
             }
         }
 
-        private void OnErrorEvent(ITcpClientAsync client, Exception ex)
+        private void OnErrorEvent(IAsyncTcpSocket client, Exception ex)
         {
             this.Close();
             this.OnClosedCall(ex);
         }
 
-        private void ReceiveEvent(ITcpClientAsync client, List<byte[]> data)
+        private void ReceiveEvent(IAsyncTcpSocket client, List<byte[]> data)
         {
             if (data == null || data.Count == 0) return;
             ThreadPool.QueueUserWorkItem((o) =>
